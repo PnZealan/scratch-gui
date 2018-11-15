@@ -188,7 +188,8 @@ const GUIComponent = props => {
                     enableCommunity={enableCommunity}
                     isShared={isShared}
                     renderLogin={renderLogin}
-                    showComingSoon={showComingSoon}
+                    // showComingSoon={showComingSoon}
+                    showComingSoon={false}
                     onClickAccountNav={onClickAccountNav}
                     onCloseAccountNav={onCloseAccountNav}
                     onLogOut={onLogOut}

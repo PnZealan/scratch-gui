@@ -41,7 +41,8 @@ class ProjectTitleInput extends React.Component {
                 placeholder={this.props.intl.formatMessage(messages.projectTitlePlaceholder)}
                 tabIndex="0"
                 type="text"
-                value={this.props.projectTitle}
+                // value={this.props.projectTitle}
+                value={null}
                 onSubmit={this.handleUpdateProjectTitle}
             />
         );

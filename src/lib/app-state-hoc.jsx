@@ -73,6 +73,8 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                         initializedGui = initTutorialCard(initializedGui, tutorialId);
                     }
                 }
+                // 只启用Player
+                //initializedGui = initPlayer(initializedGui);
                 reducers = {
                     locales: localesReducer,
                     scratchGui: guiReducer,

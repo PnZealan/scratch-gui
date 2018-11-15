@@ -37,7 +37,7 @@ const messages = defineMessages({
 
 const PreviewModal = ({intl, ...props}) => (
     <ReactModal
-        isOpen
+        //isOpen
         className={styles.modalContent}
         contentLabel={intl.formatMessage({...messages.label})}
         overlayClassName={styles.modalOverlay}

@@ -1,5 +1,6 @@
 # Mac OS
 .DS_Store
+.package-lock.json
 
 # NPM
 /node_modules
