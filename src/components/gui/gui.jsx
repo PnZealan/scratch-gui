@@ -124,15 +124,43 @@ const GUIComponent = props => {
         const stageSize = resolveStageSize(stageSizeMode, isFullSize);
 
         return isPlayerOnly ? (
-            <StageWrapper
-                isRendererSupported={isRendererSupported}
-                stageSize={stageSize}
-                vm={vm}
+            <Box
+                className={styles.pageWrapper}
+                dir={isRtl ? 'rtl' : 'ltr'}
+                {...componentProps}
             >
-                {alertsVisible ? (
-                    <Alerts className={styles.alertsContainer} />
-                ) : null}
-            </StageWrapper>
+                <MenuBar
+                    accountNavOpen={accountNavOpen}
+                    canCreateCopy={canCreateCopy}
+                    canCreateNew={canCreateNew}
+                    canRemix={canRemix}
+                    canSave={canSave}
+                    canShare={canShare}
+                    className={styles.menuBarPosition}
+                    enableCommunity={enableCommunity}
+                    isShared={isShared}
+                    renderLogin={renderLogin}
+                    // showComingSoon={showComingSoon}
+                    showComingSoon={false}
+                    onClickAccountNav={onClickAccountNav}
+                    onCloseAccountNav={onCloseAccountNav}
+                    onLogOut={onLogOut}
+                    onOpenRegistration={onOpenRegistration}
+                    onSeeCommunity={onSeeCommunity}
+                    onShare={onShare}
+                    onToggleLoginOpen={onToggleLoginOpen}
+                    onUpdateProjectTitle={onUpdateProjectTitle}
+                />
+                <StageWrapper
+                    isRendererSupported={isRendererSupported}
+                    stageSize={stageSize}
+                    vm={vm}
+                >
+                    {alertsVisible ? (
+                        <Alerts className={styles.alertsContainer} />
+                    ) : null}
+                </StageWrapper>
+            </Box>
         ) : (
             <Box
                 className={styles.pageWrapper}
