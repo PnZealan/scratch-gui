@@ -15,7 +15,7 @@ var postcssImport = require('postcss-import');
 
 
 const base = {
-    mode: process.env.NODE_ENV === 'production' ? 'production' : 'production',
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     // source-map
     //devtool: 'cheap-module-source-map',
     devServer: {

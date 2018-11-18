@@ -57,24 +57,25 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                 const {ScratchPaintReducer} = require('scratch-paint');
 
                 let initializedGui = guiInitialState;
-                if (props.isFullScreen || props.isPlayerOnly) {
-                    if (props.isFullScreen) {
-                        initializedGui = initFullScreen(initializedGui);
-                    }
-                    if (props.isPlayerOnly) {
-                        initializedGui = initPlayer(initializedGui);
-                    }
-                } else {
-                    const tutorialId = detectTutorialId();
-                    if (tutorialId !== null) {
-                        // When loading a tutorial from the URL,
-                        // load w/o preview modal
-                        // open requested tutorial card
-                        initializedGui = initTutorialCard(initializedGui, tutorialId);
-                    }
-                }
-                // 只启用Player
-                //initializedGui = initPlayer(initializedGui);
+                // if (props.isFullScreen || props.isPlayerOnly) {
+                //     if (props.isFullScreen) {
+                //         initializedGui = initFullScreen(initializedGui);
+                //     }
+                //     if (props.isPlayerOnly) {
+                //         initializedGui = initPlayer(initializedGui);
+                //     }
+                // } else {
+                //     const tutorialId = detectTutorialId();
+                //     if (tutorialId !== null) {
+                //         // When loading a tutorial from the URL,
+                //         // load w/o preview modal
+                //         // open requested tutorial card
+                //         initializedGui = initTutorialCard(initializedGui, tutorialId);
+                //     }
+                // }
+                // 只启用Player，启用全屏
+                initializedGui = initFullScreen(initializedGui);
+                initializedGui = initPlayer(initializedGui);
                 reducers = {
                     locales: localesReducer,
                     scratchGui: guiReducer,
