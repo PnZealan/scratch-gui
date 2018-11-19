@@ -114,12 +114,12 @@ class SBFileUploader extends React.Component {
         // const intl = this.props.intl;
         // const loadingState = this.props.loadingState;
         var request = new XMLHttpRequest();
-        request.open('GET', "http://127.0.0.1/KnifeFlip.sb3", true);//地址替换为自己dat文件的地址
+        request.open('GET', "/share/Dontdrivemycar.sb2", true);//地址替换为自己dat文件的地址
         request.responseType = 'blob';
         // request.onload = function () 
         console.log("start request")
         request.onload = () => {
-            this.props.onLoadingStarted();
+            //this.props.onLoadingStarted();
             // TODO 通过url参数的文件的名字判断
             //const uploadedProjectTitle = this.getProjectTitleFromFilename(thisFileInput.files[0].name);
             // TODO 更新title
