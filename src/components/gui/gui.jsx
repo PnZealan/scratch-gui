@@ -40,6 +40,8 @@ import addExtensionIcon from './icon--extensions.svg';
 import codeIcon from './icon--code.svg';
 import costumesIcon from './icon--costumes.svg';
 import soundsIcon from './icon--sounds.svg';
+import SBFileUploader from '../../containers/sb-file-uploader.jsx';
+// import Getfile from './fetch-file.jsx';
 
 const messages = defineMessages({
     addExtension: {
@@ -129,7 +131,45 @@ const GUIComponent = props => {
                 dir={isRtl ? 'rtl' : 'ltr'}
                 {...componentProps}
             >
-                <MenuBar
+                {previewInfoVisible ? (
+                    <PreviewModal />
+                ) : null}
+                {loading ? (
+                    <Loader />
+                ) : null}
+                {importInfoVisible ? (
+                    <ImportModal />
+                ) : null}
+                {isRendererSupported ? null : (
+                    <WebGlModal isRtl={isRtl} />
+                )}
+                {tipsLibraryVisible ? (
+                    <TipsLibrary />
+                ) : null}
+                {cardsVisible ? (
+                    <Cards />
+                ) : null}
+                {alertsVisible ? (
+                    <Alerts className={styles.alertsContainer} />
+                ) : null}
+                {connectionModalVisible ? (
+                    <ConnectionModal
+                        vm={vm}
+                    />
+                ) : null}
+                {costumeLibraryVisible ? (
+                    <CostumeLibrary
+                        vm={vm}
+                        onRequestClose={onRequestCloseCostumeLibrary}
+                    />
+                ) : null}
+                {backdropLibraryVisible ? (
+                    <BackdropLibrary
+                        vm={vm}
+                        onRequestClose={onRequestCloseBackdropLibrary}
+                    />
+                ) : null}
+                {/* <MenuBar
                     accountNavOpen={accountNavOpen}
                     canCreateCopy={canCreateCopy}
                     canCreateNew={canCreateNew}
@@ -150,7 +190,7 @@ const GUIComponent = props => {
                     onShare={onShare}
                     onToggleLoginOpen={onToggleLoginOpen}
                     onUpdateProjectTitle={onUpdateProjectTitle}
-                />
+                /> */}
                 <StageWrapper
                     isRendererSupported={isRendererSupported}
                     stageSize={stageSize}
@@ -159,7 +199,40 @@ const GUIComponent = props => {
                     {alertsVisible ? (
                         <Alerts className={styles.alertsContainer} />
                     ) : null}
+                    {console.log("finish stage")}
                 </StageWrapper>
+                {console.log("start sb")}
+                <SBFileUploader >
+                    {(className, renderFileInput, loadProject) => (
+                        <div>
+                            {renderFileInput()}
+                        </div>
+                    )
+                    }
+                    
+                </SBFileUploader>
+                {/* <MenuBar
+                    accountNavOpen={accountNavOpen}
+                    canCreateCopy={canCreateCopy}
+                    canCreateNew={canCreateNew}
+                    canRemix={canRemix}
+                    canSave={canSave}
+                    canShare={canShare}
+                    className={styles.menuBarPosition}
+                    enableCommunity={enableCommunity}
+                    isShared={isShared}
+                    renderLogin={renderLogin}
+                    // showComingSoon={showComingSoon}
+                    showComingSoon={false}
+                    onClickAccountNav={onClickAccountNav}
+                    onCloseAccountNav={onCloseAccountNav}
+                    onLogOut={onLogOut}
+                    onOpenRegistration={onOpenRegistration}
+                    onSeeCommunity={onSeeCommunity}
+                    onShare={onShare}
+                    onToggleLoginOpen={onToggleLoginOpen}
+                    onUpdateProjectTitle={onUpdateProjectTitle}
+                /> */}
             </Box>
         ) : (
             <Box

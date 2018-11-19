@@ -362,7 +362,29 @@ class MenuBar extends React.Component {
                                 </MenuSection>
                                 <MenuSection>
                                     <SBFileUploader onUpdateProjectTitle={this.props.onUpdateProjectTitle}>
-                                        {(className, renderFileInput, loadProject) => (
+                                        {(renderFileInput) => (
+                                            <MenuItem>
+                                                {renderFileInput()}
+                                            </MenuItem>
+                                        )}
+                                    </SBFileUploader>
+                                    <SB3Downloader>{(className, downloadProject) => (
+                                        <MenuItem
+                                            className={className}
+                                            onClick={this.handleCloseFileMenuAndThen(downloadProject)}
+                                        >
+                                            <FormattedMessage
+                                                defaultMessage="Save to your computer"
+                                                description="Menu bar item for downloading a project to your computer"
+                                                id="gui.menuBar.downloadToComputer"
+                                            />
+                                        </MenuItem>
+                                    )}</SB3Downloader>
+                                </MenuSection>
+                                {/* <MenuSection>
+                                    <SBFileUploader onUpdateProjectTitle={this.props.onUpdateProjectTitle}>
+                                    返回一个函数，在sb-file-uploader 中 通过this.props.children 显示调用这个函数
+                                    {(className, renderFileInput, loadProject) => (
                                             <MenuItem
                                                 className={className}
                                                 onClick={loadProject}
@@ -390,16 +412,7 @@ class MenuBar extends React.Component {
                                             />
                                         </MenuItem>
                                     )}</SB3Downloader>
-                                </MenuSection>
-                                {/* <SBFileUploader onUpdateProjectTitle={this.props.onUpdateProjectTitle}>
-                                返回一个函数，在sb-file-uploader 中 通过this.props.children 显示调用这个函数
-                                        {(className, renderFileInput, loadProject) => (
-
-                                                onLoad={loadProject},
-                                            
-                                                {renderFileInput()}
-                                        )}
-                                    </SBFileUploader> */}
+                                </MenuSection> */}
                             </MenuBarMenu>
                         </div>
                         <div

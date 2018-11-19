@@ -29,6 +29,7 @@ import {
  * )}</SBFileUploader>
  */
 
+
 const messages = defineMessages({
     loadError: {
         id: 'gui.projectLoader.loadError',
@@ -56,58 +57,138 @@ class SBFileUploader extends React.Component {
         return matches[1].substring(0, 100); // truncate project title to max 100 chars
     }
     // called when user has finished selecting a file to upload
-    handleChange (e) {
-        // Remove the hash if any (without triggering a hash change event or a reload)
-        history.replaceState({}, document.title, '.');
-        const reader = new FileReader();
-        const thisFileInput = e.target;
-        reader.onload = () => this.props.vm.loadProject(reader.result)
-            .then(() => {
-                analytics.event({
-                    category: 'project',
-                    action: 'Import Project File',
-                    nonInteraction: true
-                });
-                this.props.onLoadingFinished(this.props.loadingState);
-                // Reset the file input after project is loaded
-                // This is necessary in case the user wants to reload a project
-                thisFileInput.value = null;
-            })
-            .catch(error => {
-                log.warn(error);
-                alert(this.props.intl.formatMessage(messages.loadError)); // eslint-disable-line no-alert
-                this.props.onLoadingFinished(this.props.loadingState);
-                // Reset the file input after project is loaded
-                // This is necessary in case the user wants to reload a project
-                thisFileInput.value = null;
-            });
-        if (thisFileInput.files) { // Don't attempt to load if no file was selected
+    // handleChange (e) {
+    //     // Remove the hash if any (without triggering a hash change event or a reload)
+    //     history.replaceState({}, document.title, '.');
+    //     const reader = new FileReader();
+    //     const thisFileInput = e.target;
+    //     reader.onload = () => this.props.vm.loadProject(reader.result)
+    //         .then(() => {
+    //             analytics.event({
+    //                 category: 'project',
+    //                 action: 'Import Project File',
+    //                 nonInteraction: true
+    //             });
+    //             this.props.onLoadingFinished(this.props.loadingState);
+    //             // Reset the file input after project is loaded
+    //             // This is necessary in case the user wants to reload a project
+    //             thisFileInput.value = null;
+    //         })
+    //         .catch(error => {
+    //             log.warn(error);
+    //             alert(this.props.intl.formatMessage(messages.loadError)); // eslint-disable-line no-alert
+    //             this.props.onLoadingFinished(this.props.loadingState);
+    //             // Reset the file input after project is loaded
+    //             // This is necessary in case the user wants to reload a project
+    //             thisFileInput.value = null;
+    //         });
+    //     if (thisFileInput.files) { // Don't attempt to load if no file was selected
+    //         this.props.onLoadingStarted();
+    //         reader.readAsArrayBuffer(thisFileInput.files[0]);
+    //         const uploadedProjectTitle = this.getProjectTitleFromFilename(thisFileInput.files[0].name);
+    //         this.props.onUpdateProjectTitle(uploadedProjectTitle);
+    //     }
+    // }
+    handleChange() {
+        // console.log("+++++++++++++++++++++++++++++");
+        // fetch('http://127.0.0.1/KnifeFlip.sb3',{method: 'GET'}).then(
+        //         res =>{
+        //             if(res) {  
+        //                 console.log(res)
+        //                 data = res.blob()
+        //             }
+        //             else{
+        //                 return
+        //             }
+        //         }).then(
+        //             data => {
+        //                 console.log(data)
+        //                 console.log("start loadproject")
+        //                 this.props.vm.loadProject(data)
+        //             }
+        //         ).then(
+        //             this.props.onLoadingFinished(this.props.loadingState)
+        //         );
+        // const vm = this.props.vm;
+        // const onLoadingFinished = this.props.onLoadingFinished;
+        // const intl = this.props.intl;
+        // const loadingState = this.props.loadingState;
+        var request = new XMLHttpRequest();
+        request.open('GET', "http://127.0.0.1/KnifeFlip.sb3", true);//地址替换为自己dat文件的地址
+        request.responseType = 'blob';
+        // request.onload = function () 
+        console.log("start request")
+        request.onload = () => {
             this.props.onLoadingStarted();
-            reader.readAsArrayBuffer(thisFileInput.files[0]);
-            const uploadedProjectTitle = this.getProjectTitleFromFilename(thisFileInput.files[0].name);
-            this.props.onUpdateProjectTitle(uploadedProjectTitle);
+            // TODO 通过url参数的文件的名字判断
+            //const uploadedProjectTitle = this.getProjectTitleFromFilename(thisFileInput.files[0].name);
+            // TODO 更新title
+            //this.props.onUpdateProjectTitle(uploadedProjectTitle);
+            console.log("start reader")
+            var reader = new FileReader();
+            reader.readAsArrayBuffer(request.response);
+            reader.onload =  (e) => 
+                this.props.vm.loadProject(e.target.result).then(() => {
+                    console.log("finish load");
+                    console.log(e.target.result)
+                    this.props.onLoadingFinished(this.props.loadingState);
+                    // Reset the file input after project is loaded
+                    // This is necessary in case the user wants to reload a project
+                }).catch(error => {
+                    log.warn(error);
+                    //alert(intl.formatMessage(messages.loadError)); // eslint-disable-line no-alert
+                    this.props.onLoadingFinished(this.props.loadingState);
+                    // Reset the file input after project is loaded
+                    // This is necessary in case the user wants to reload a project
+            });
         }
+        request.send();
     }
+
+    // handleLoad (data) {
+        
+    
+        
+    
     handleClick () {
         // open filesystem browsing window
-        this.fileInput.click();
+        // console.log("---------------------------------");
+        // console.log(this.fileInput);
+        if (this.fileInput) {
+            this.fileInput.click();
+            console.log("---------------------------------");
+        }
+        else {
+            console.log("+++++++++++++++++++++++++++++")
+        }
     }
     setFileInput (input) {
         this.fileInput = input;
     }
+    // renderFileInput () {
+    //     return (
+    //         <input
+    //             accept=".sb2,.sb3"
+    //             ref={this.setFileInput}
+    //             style={{display: 'none'}}
+    //             type="file"
+    //             onChange={this.handleChange}
+    //         />
+    //     );
+    // }
     renderFileInput () {
         return (
-            <input
-                accept=".sb2,.sb3"
-                ref={this.setFileInput}
-                style={{display: 'none'}}
-                type="file"
-                onChange={this.handleChange}
-            />
-        );
+            this.handleChange()
+            );
     }
     render () {
+        // return this.props.children( this.renderFileInput, this.handleClick);
         return this.props.children(this.props.className, this.renderFileInput, this.handleClick);
+        // return (
+        //     <div>
+        //         {this.renderFileInput()}
+        //     </div>
+        // );
     }
 }
 
