@@ -114,7 +114,7 @@ class SBFileUploader extends React.Component {
         // const intl = this.props.intl;
         // const loadingState = this.props.loadingState;
         var request = new XMLHttpRequest();
-        request.open('GET', "/share/Dontdrivemycar.sb2", true);//地址替换为自己dat文件的地址
+        request.open('GET', "http://127.0.0.1/Boss.sb2", true);//地址替换为自己dat文件的地址
         request.responseType = 'blob';
         // request.onload = function () 
         console.log("start request")
@@ -131,13 +131,13 @@ class SBFileUploader extends React.Component {
                 this.props.vm.loadProject(e.target.result).then(() => {
                     console.log("finish load");
                     console.log(e.target.result)
-                    this.props.onLoadingFinished(this.props.loadingState);
+                    //this.props.onLoadingFinished(this.props.loadingState);
                     // Reset the file input after project is loaded
                     // This is necessary in case the user wants to reload a project
                 }).catch(error => {
                     log.warn(error);
                     //alert(intl.formatMessage(messages.loadError)); // eslint-disable-line no-alert
-                    this.props.onLoadingFinished(this.props.loadingState);
+                    //this.props.onLoadingFinished(this.props.loadingState);
                     // Reset the file input after project is loaded
                     // This is necessary in case the user wants to reload a project
             });
