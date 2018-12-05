@@ -117,7 +117,7 @@ class SBFileUploader extends React.Component {
         var arrUrl = url.split("?");
         var para = arrUrl[1];
         var request = new XMLHttpRequest();
-        request.open('GET', "http://127.0.0.1/" + para, true);//地址替换为自己dat文件的地址
+        request.open('GET', "/file/" + para, true);//地址替换为自己dat文件的地址
         request.responseType = 'blob';
         // request.onload = function () 
         console.log("start request")
