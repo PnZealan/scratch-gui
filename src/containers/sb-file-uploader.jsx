@@ -113,8 +113,11 @@ class SBFileUploader extends React.Component {
         // const onLoadingFinished = this.props.onLoadingFinished;
         // const intl = this.props.intl;
         // const loadingState = this.props.loadingState;
+        var url = document.location.toString();
+        var arrUrl = url.split("?");
+        var para = arrUrl[1];
         var request = new XMLHttpRequest();
-        request.open('GET', "http://127.0.0.1/Boss.sb2", true);//地址替换为自己dat文件的地址
+        request.open('GET', "http://127.0.0.1/" + para, true);//地址替换为自己dat文件的地址
         request.responseType = 'blob';
         // request.onload = function () 
         console.log("start request")
@@ -145,7 +148,7 @@ class SBFileUploader extends React.Component {
         request.send();
     }
 
-    // handleLoad (data) {
+
         
     
         
