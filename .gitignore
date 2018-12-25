@@ -16,6 +16,7 @@ npm-*
 /.opt-in
 /build.zip
 /build-m.zip
+*.zip
 
 # generated translation files
 /translations
