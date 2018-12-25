@@ -126,71 +126,6 @@ const GUIComponent = props => {
         const stageSize = resolveStageSize(stageSizeMode, isFullSize);
 
         return isPlayerOnly ? (
-            <Box
-                className={styles.pageWrapper}
-                dir={isRtl ? 'rtl' : 'ltr'}
-                {...componentProps}
-            >
-                {previewInfoVisible ? (
-                    <PreviewModal />
-                ) : null}
-                {loading ? (
-                    <Loader />
-                ) : null}
-                {importInfoVisible ? (
-                    <ImportModal />
-                ) : null}
-                {isRendererSupported ? null : (
-                    <WebGlModal isRtl={isRtl} />
-                )}
-                {tipsLibraryVisible ? (
-                    <TipsLibrary />
-                ) : null}
-                {cardsVisible ? (
-                    <Cards />
-                ) : null}
-                {alertsVisible ? (
-                    <Alerts className={styles.alertsContainer} />
-                ) : null}
-                {connectionModalVisible ? (
-                    <ConnectionModal
-                        vm={vm}
-                    />
-                ) : null}
-                {costumeLibraryVisible ? (
-                    <CostumeLibrary
-                        vm={vm}
-                        onRequestClose={onRequestCloseCostumeLibrary}
-                    />
-                ) : null}
-                {backdropLibraryVisible ? (
-                    <BackdropLibrary
-                        vm={vm}
-                        onRequestClose={onRequestCloseBackdropLibrary}
-                    />
-                ) : null}
-                {/* <MenuBar
-                    accountNavOpen={accountNavOpen}
-                    canCreateCopy={canCreateCopy}
-                    canCreateNew={canCreateNew}
-                    canRemix={canRemix}
-                    canSave={canSave}
-                    canShare={canShare}
-                    className={styles.menuBarPosition}
-                    enableCommunity={enableCommunity}
-                    isShared={isShared}
-                    renderLogin={renderLogin}
-                    // showComingSoon={showComingSoon}
-                    showComingSoon={false}
-                    onClickAccountNav={onClickAccountNav}
-                    onCloseAccountNav={onCloseAccountNav}
-                    onLogOut={onLogOut}
-                    onOpenRegistration={onOpenRegistration}
-                    onSeeCommunity={onSeeCommunity}
-                    onShare={onShare}
-                    onToggleLoginOpen={onToggleLoginOpen}
-                    onUpdateProjectTitle={onUpdateProjectTitle}
-                /> */}
                 <StageWrapper
                     isRendererSupported={isRendererSupported}
                     stageSize={stageSize}
@@ -199,41 +134,7 @@ const GUIComponent = props => {
                     {alertsVisible ? (
                         <Alerts className={styles.alertsContainer} />
                     ) : null}
-                    {console.log("finish stage")}
                 </StageWrapper>
-                {console.log("start sb")}
-                <SBFileUploader >
-                    {(className, renderFileInput, loadProject) => (
-                        <div>
-                            {renderFileInput()}
-                        </div>
-                    )
-                    }
-                    
-                </SBFileUploader>
-                {/* <MenuBar
-                    accountNavOpen={accountNavOpen}
-                    canCreateCopy={canCreateCopy}
-                    canCreateNew={canCreateNew}
-                    canRemix={canRemix}
-                    canSave={canSave}
-                    canShare={canShare}
-                    className={styles.menuBarPosition}
-                    enableCommunity={enableCommunity}
-                    isShared={isShared}
-                    renderLogin={renderLogin}
-                    // showComingSoon={showComingSoon}
-                    showComingSoon={false}
-                    onClickAccountNav={onClickAccountNav}
-                    onCloseAccountNav={onCloseAccountNav}
-                    onLogOut={onLogOut}
-                    onOpenRegistration={onOpenRegistration}
-                    onSeeCommunity={onSeeCommunity}
-                    onShare={onShare}
-                    onToggleLoginOpen={onToggleLoginOpen}
-                    onUpdateProjectTitle={onUpdateProjectTitle}
-                /> */}
-            </Box>
         ) : (
             <Box
                 className={styles.pageWrapper}

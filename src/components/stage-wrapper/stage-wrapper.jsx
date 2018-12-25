@@ -6,6 +6,7 @@ import Box from '../box/box.jsx';
 import {STAGE_DISPLAY_SIZES} from '../../lib/layout-constants.js';
 import StageHeader from '../../containers/stage-header.jsx';
 import Stage from '../../containers/stage.jsx';
+import SBFileUploader from '../../containers/sb-file-uploader.jsx';
 
 import styles from './stage-wrapper.css';
 
@@ -34,6 +35,15 @@ const StageWrapperComponent = function (props) {
                         null
                 }
             </Box>
+            <SBFileUploader >
+                    {(className, renderFileInput, loadProject) => (
+                        <div>
+                            {renderFileInput()}
+                        </div>
+                    )
+                    }
+                    
+                </SBFileUploader>
         </Box>
     );
 };

@@ -12,7 +12,7 @@ import Divider from '../divider/divider.jsx';
 import LanguageSelector from '../../containers/language-selector.jsx';
 import SBFileUploader from '../../containers/sb-file-uploader.jsx';
 import MenuBarMenu from './menu-bar-menu.jsx';
-import {MenuItem, MenuSection} from '../menu/menu.jsx';
+import {MenuItem, MenuSection, MenuItem1} from '../menu/menu.jsx';
 import ProjectTitleInput from './project-title-input.jsx';
 import AccountNav from '../../containers/account-nav.jsx';
 import LoginDropdown from './login-dropdown.jsx';
@@ -367,6 +367,12 @@ class MenuBar extends React.Component {
                                                 {renderFileInput()}
                                             </MenuItem>
                                         )}
+                                        {/* <MenuItem1
+                                            className={className}
+                                            onClick={this.renderFileInput()}
+                                        >
+                                            
+                                        </MenuItem1> */}
                                     </SBFileUploader>
                                     <SB3Downloader>{(className, downloadProject) => (
                                         <MenuItem
