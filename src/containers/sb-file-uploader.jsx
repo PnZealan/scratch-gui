@@ -48,6 +48,7 @@ class SBFileUploader extends React.Component {
             'handleChange',
             'handleClick'
         ]);
+        this.flag = true
     }
     getProjectTitleFromFilename (fileInputFilename) {
         if (!fileInputFilename) return '';
@@ -116,38 +117,41 @@ class SBFileUploader extends React.Component {
         var url = document.location.toString();
         var arrUrl = url.split("?");
         var para = arrUrl[1];
-        var request = new XMLHttpRequest();
-        var url = "/sf/" + para
-        console.log(url)
-        request.open('GET', url, true);//地址替换为自己dat文件的地址
-        request.responseType = 'blob';
-        // request.onload = function () 
-        console.log("start request")
-        request.onload = () => {
-            //this.props.onLoadingStarted();
-            // TODO 通过url参数的文件的名字判断
-            //const uploadedProjectTitle = this.getProjectTitleFromFilename(thisFileInput.files[0].name);
-            // TODO 更新title
-            //this.props.onUpdateProjectTitle(uploadedProjectTitle);
-            console.log("start reader")
-            var reader = new FileReader();
-            reader.readAsArrayBuffer(request.response);
-            reader.onload =  (e) => 
-                this.props.vm.loadProject(e.target.result).then(() => {
-                    console.log("finish load");
-                    console.log(e.target.result)
-                    //this.props.onLoadingFinished(this.props.loadingState);
-                    // Reset the file input after project is loaded
-                    // This is necessary in case the user wants to reload a project
-                }).catch(error => {
-                    log.warn(error);
-                    //alert(intl.formatMessage(messages.loadError)); // eslint-disable-line no-alert
-                    //this.props.onLoadingFinished(this.props.loadingState);
-                    // Reset the file input after project is loaded
-                    // This is necessary in case the user wants to reload a project
-            });
+        if (this.flag) {
+            var request = new XMLHttpRequest();
+            var url = "/sf/" + para
+            console.log(url)
+            request.open('GET', url, true);//地址替换为自己dat文件的地址
+            request.responseType = 'blob';
+            // request.onload = function () 
+            console.log("start request")
+            request.onload = () => {
+                //this.props.onLoadingStarted();
+                // TODO 通过url参数的文件的名字判断
+                //const uploadedProjectTitle = this.getProjectTitleFromFilename(thisFileInput.files[0].name);
+                // TODO 更新title
+                //this.props.onUpdateProjectTitle(uploadedProjectTitle);
+                console.log("start reader")
+                var reader = new FileReader();
+                reader.readAsArrayBuffer(request.response);
+                reader.onload =  (e) => 
+                    this.props.vm.loadProject(e.target.result).then(() => {
+                        this.flag=false
+                        console.log("finish load");
+                        console.log(e.target.result)
+                        //this.props.onLoadingFinished(this.props.loadingState);
+                        // Reset the file input after project is loaded
+                        // This is necessary in case the user wants to reload a project
+                    }).catch(error => {
+                        log.warn(error);
+                        //alert(intl.formatMessage(messages.loadError)); // eslint-disable-line no-alert
+                        //this.props.onLoadingFinished(this.props.loadingState);
+                        // Reset the file input after project is loaded
+                        // This is necessary in case the user wants to reload a project
+                });
+            }
+            request.send();
         }
-        request.send();
     }
 
 
