@@ -10,7 +10,6 @@ import {setPlayer, setFullScreen} from '../reducers/mode.js';
 
 import locales from 'scratch-l10n';
 import {detectLocale} from './detect-locale';
-import {detectTutorialId} from './tutorial-from-url';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -52,30 +51,24 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                     guiMiddleware,
                     initFullScreen,
                     initPlayer,
-                    initTutorialCard
+                    initPreviewInfo,
+                    initTelemetryModal
                 } = guiRedux;
                 const {ScratchPaintReducer} = require('scratch-paint');
 
                 let initializedGui = guiInitialState;
-                // if (props.isFullScreen || props.isPlayerOnly) {
-                //     if (props.isFullScreen) {
-                //         initializedGui = initFullScreen(initializedGui);
-                //     }
-                //     if (props.isPlayerOnly) {
-                //         initializedGui = initPlayer(initializedGui);
-                //     }
-                // } else {
-                //     const tutorialId = detectTutorialId();
-                //     if (tutorialId !== null) {
-                //         // When loading a tutorial from the URL,
-                //         // load w/o preview modal
-                //         // open requested tutorial card
-                //         initializedGui = initTutorialCard(initializedGui, tutorialId);
-                //     }
-                // }
-                // 只启用Player，启用全屏
-                initializedGui = initFullScreen(initializedGui);
-                initializedGui = initPlayer(initializedGui);
+                if (props.isFullScreen || props.isPlayerOnly) {
+                    if (props.isFullScreen) {
+                        initializedGui = initFullScreen(initializedGui);
+                    }
+                    if (props.isPlayerOnly) {
+                        initializedGui = initPlayer(initializedGui);
+                    }
+                } else if (props.showTelemetryModal) {
+                    initializedGui = initTelemetryModal(initializedGui);
+                } else if (props.showPreviewInfo) {
+                    initializedGui = initPreviewInfo(initializedGui);
+                }
                 reducers = {
                     locales: localesReducer,
                     scratchGui: guiReducer,
@@ -107,12 +100,16 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
             const {
                 isFullScreen, // eslint-disable-line no-unused-vars
                 isPlayerOnly, // eslint-disable-line no-unused-vars
+                showPreviewInfo, // eslint-disable-line no-unused-vars
+                showTelemetryModal, // eslint-disable-line no-unused-vars
                 ...componentProps
             } = this.props;
             return (
                 <Provider store={this.store}>
                     <ConnectedIntlProvider>
-                        <WrappedComponent {...componentProps} />
+                        <WrappedComponent
+                            {...componentProps}
+                        />
                     </ConnectedIntlProvider>
                 </Provider>
             );
@@ -120,7 +117,8 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
     }
     AppStateWrapper.propTypes = {
         isFullScreen: PropTypes.bool,
-        isPlayerOnly: PropTypes.bool
+        isPlayerOnly: PropTypes.bool,
+        showPreviewInfo: PropTypes.bool
     };
     return AppStateWrapper;
 };
