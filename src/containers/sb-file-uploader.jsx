@@ -58,15 +58,18 @@ class SBFileUploader extends React.Component {
             'onload',
             'resetFileInput'
         ]);
-        this.flag=true;
     }
     componentWillMount () {
         this.reader = new FileReader();
+        // when the load event is fired, when content read with readAsArrayBuffer, 
+        // readAsBinaryString, readAsDataURL or readAsText is available.
         this.reader.onload = this.onload;
         this.resetFileInput();
     }
     componentDidUpdate (prevProps) {
         if (this.props.isLoadingUpload && !prevProps.isLoadingUpload && this.fileToUpload && this.reader) {
+            //TODO ajax => resp => reader.readAsArrayBuffer
+            console.log("ready to request")
             this.reader.readAsArrayBuffer(this.fileToUpload);
         }
     }
@@ -88,12 +91,8 @@ class SBFileUploader extends React.Component {
         return matches[1].substring(0, 100); // truncate project title to max 100 chars
     }
     // called when user has finished selecting a file to upload
-    handleChange (e) {
-        const thisFileInput = e.target;
-        if (thisFileInput.files) { // Don't attempt to load if no file was selected
-            this.fileToUpload = thisFileInput.files[0];
-            this.props.requestProjectUpload(this.props.loadingState);
-        }
+    handleChange () {
+        this.props.requestProjectUpload(this.props.loadingState);
     }
     // called when file upload raw data is available in the reader
     onload () {
@@ -129,51 +128,28 @@ class SBFileUploader extends React.Component {
         }
     }
 
-
-        
-    
-        
-    
     handleClick () {
         // open filesystem browsing window
-        // console.log("---------------------------------");
-        // console.log(this.fileInput);
-        if (this.fileInput) {
-            this.fileInput.click();
-            console.log("---------------------------------");
-        }
-        else {
-            console.log("+++++++++++++++++++++++++++++")
-        }
+        this.fileInput.click();
     }
     setFileInput (input) {
         this.fileInput = input;
     }
-    // renderFileInput () {
-    //     return (
-    //         <input
-    //             accept=".sb2,.sb3"
-    //             ref={this.setFileInput}
-    //             style={{display: 'none'}}
-    //             type="file"
-    //             onChange={this.handleChange}
-    //         />
-    //     );
-    // }
     renderFileInput () {
         return (
-            <input
-                accept=".sb,.sb2,.sb3"
-                ref={this.setFileInput}
-                style={{display: 'none'}}
-                type="file"
-                onChange={this.handleChange}
-            />
+            <button onClick={this.handleChange} >wrapp project</button>
         );
     }
     render () {
         // return this.props.children( this.renderFileInput, this.handleClick);
-        return this.props.children(this.props.className, this.renderFileInput, this.handleClick);
+        return this.props.children(this.renderFileInput);
+        // <SBFileUploader>{(renderFileInput, loadProject) => (
+        //     *     <MyCoolComponent
+        //     *         onClick={loadProject}
+        //     *     >
+        //     *         {renderFileInput()}
+        //     *     </MyCoolComponent>
+        //     * )}</SBFileUploader>
         // return (
         //     <div>
         //         {this.renderFileInput()}

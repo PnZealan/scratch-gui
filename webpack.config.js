@@ -15,7 +15,7 @@ var postcssImport = require('postcss-import');
 
 
 const base = {
-    mode: process.env.NODE_ENV === 'production' ? 'production' : 'production',
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     // source-map
     //devtool: 'cheap-module-source-map',
     devServer: {
@@ -164,7 +164,7 @@ module.exports = [
                 chunks: ['lib.min', 'player'],
                 template: 'src/playground/index.ejs',
                 filename: 'player.html',
-                title: 'Scratch 3.0 GUI: Player Example'
+                title: '萝卜仔实验室'
             }),
             new CopyWebpackPlugin([{
                 from: 'static',

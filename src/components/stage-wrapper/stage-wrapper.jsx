@@ -23,6 +23,13 @@ const StageWrapperComponent = function (props) {
             className={styles.stageWrapper}
             dir={isRtl ? 'rtl' : 'ltr'}
         >
+            <SBFileUploader >
+                    {( renderFileInput) => (
+                        renderFileInput()
+                    )
+                    }
+                    
+            </SBFileUploader>
             <Box className={styles.stageMenuWrapper}>
                 <StageHeader
                     stageSize={stageSize}
@@ -39,15 +46,6 @@ const StageWrapperComponent = function (props) {
                         null
                 }
             </Box>
-            <SBFileUploader >
-                    {(className, renderFileInput, loadProject) => (
-                        <div>
-                            {renderFileInput()}
-                        </div>
-                    )
-                    }
-                    
-                </SBFileUploader>
         </Box>
     );
 };
